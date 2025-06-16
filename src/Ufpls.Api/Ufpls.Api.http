@@ -1,0 +1,6 @@
+@Ufpls.Api_HostAddress = http://localhost:5249
+
+GET {{Ufpls.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
