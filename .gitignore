@@ -208,9 +208,6 @@ StyleCopReport.xml
 *.scc
 
 # Docker
-.dockerignore
-Dockerfile*
-docker-compose*
 .docker
 
 # Azure Functions localsettings file
