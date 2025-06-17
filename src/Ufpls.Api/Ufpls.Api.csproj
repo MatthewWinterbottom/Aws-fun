@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ufpls.Checker\Ufpls.Checker.csproj" />
+    <ProjectReference Include="..\Ufpls.Domain\Ufpls.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
