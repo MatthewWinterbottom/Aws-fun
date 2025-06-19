@@ -5,11 +5,12 @@
     "dotnet lambda help",
     "All the command line options for the Lambda command can be specified in this file."
   ],
-  "profile": "",
-  "region": "",
+  "profile": "default",
+  "region": "eu-west-2",
   "configuration": "Release",
   "function-runtime": "dotnet8",
-  "function-memory-size": 512,
+  "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "Ufpls.Lambda::Ufpls.Lambda.Function::FunctionHandler"
+  "function-handler": "Ufpls.Lambda::Ufpls.Lambda.Function::FunctionHandler",
+  "function-name": "UfplsEligibilityLambda"
 }

@@ -1,7 +1,13 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Ufpls.Domain;
 
 public class UfplsCase
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
     public string CaseId { get; set; } = default!;
     public string MemberId { get; set; } = default!;
     public decimal FundValue { get; set; }
