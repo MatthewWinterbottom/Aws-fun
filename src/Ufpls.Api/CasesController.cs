@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Ufpls.Api.Services;
 using Ufpls.Checker;
 using Ufpls.Domain;
 
@@ -8,10 +9,18 @@ namespace Ufpls.Api.Controllers;
 [Route("cases")]
 public class CasesController : ControllerBase
 {
-    [HttpGet("{id}")]
-    public IActionResult GetCase(string id)
+    private readonly UfplsCaseService _service;
+
+    public CasesController(UfplsCaseService service)
     {
-        return Ok(new { Id = id, Status = "Pending" });
+        _service = service;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCase(string id)
+    {
+        var result = await _service.GetCaseByIdAsync(id);
+        return result is null ? NotFound() : Ok(result);
     }
 
     [HttpPost("evaluate")]
