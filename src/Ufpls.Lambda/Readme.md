@@ -54,6 +54,6 @@ Deploy function to AWS Lambda
 Run locally
 
 ```
-    docker compose up -d
-    dotnet-lambda-test-tool-8.0
+    cd src/Ufpls.Lambda
+    dotnet tool run dotnet-lambda-testool-8.0
 ```

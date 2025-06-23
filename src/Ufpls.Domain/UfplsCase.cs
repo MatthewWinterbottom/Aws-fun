@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -7,6 +8,7 @@ public class UfplsCase
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
+    [JsonIgnore]
     public string? Id { get; set; }
     public string CaseId { get; set; } = default!;
     public string MemberId { get; set; } = default!;

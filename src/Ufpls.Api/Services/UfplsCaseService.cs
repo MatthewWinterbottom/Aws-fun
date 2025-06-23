@@ -9,7 +9,7 @@ public class UfplsCaseService
 
     public UfplsCaseService(IConfiguration config)
     {
-        var mongoConn = config["MONGO_CONNECTION_STRING"];
+        var mongoConn = config["mongoDbConnectionString"];
         var client = new MongoClient(mongoConn);
         var db = client.GetDatabase("ufpls");
         _collection = db.GetCollection<UfplsCase>("cases");

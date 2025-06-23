@@ -24,7 +24,7 @@ public class Function
     public Function()
     {
         // Fetch MongoDB connection string from env var (Secrets Manager later)
-        var mongoConn = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING")!;
+        var mongoConn = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
         var client = new MongoClient(mongoConn);
         var db = client.GetDatabase("ufpls");
         _collection = db.GetCollection<UfplsCase>("cases");
@@ -63,9 +63,20 @@ public class Function
         ufplsCase.Status = isEligible ? UfplsCaseStatus.Eligible : UfplsCaseStatus.Ineligible;
         ufplsCase.EligibilityChecks = results;
 
-        await _collection.ReplaceOneAsync(
-            x => x.CaseId == ufplsCase.CaseId,
-            ufplsCase,
-            new ReplaceOptions { IsUpsert = true });
+        // Check if document exists first
+        var existingDoc = await _collection.Find(x => x.CaseId == ufplsCase.CaseId).FirstOrDefaultAsync();
+        
+        if (existingDoc != null)
+        {
+            // Update existing - keep the existing Id
+            ufplsCase.Id = existingDoc.Id;
+            await _collection.ReplaceOneAsync(x => x.CaseId == ufplsCase.CaseId, ufplsCase);
+        }
+        else
+        {
+            // New document - don't set Id, let MongoDB generate it
+            ufplsCase.Id = null; // or just leave it as is
+            await _collection.InsertOneAsync(ufplsCase);
+        }
     }
 }

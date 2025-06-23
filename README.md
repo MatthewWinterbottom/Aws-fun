@@ -10,6 +10,11 @@ Looking to build something simple and get it deployed to AWS to get familiar wit
 
 # How to run
 
+Set your environment variable
+```
+    export MONGO_CONNECTION_STRING="mongodb://localhost:27017"
+```
+
 Spin up the db
 ```
     docker compose up -d
@@ -17,7 +22,8 @@ Spin up the db
 
 Spin up the API
 ```
-    dotnet run src/Ufpls.Api
+    cd src/Ufpls.Api
+    dotnet run
 ```
 
 For running the lambda too, see the Readme.md in the lambda project

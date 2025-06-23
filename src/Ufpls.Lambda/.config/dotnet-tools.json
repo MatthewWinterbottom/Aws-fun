@@ -8,6 +8,13 @@
         "dotnet-lambda-test-tool-6.0"
       ],
       "rollForward": false
+    },
+    "amazon.lambda.testtool-8.0": {
+      "version": "0.16.2",
+      "commands": [
+        "dotnet-lambda-test-tool-8.0"
+      ],
+      "rollForward": false
     }
   }
 }
