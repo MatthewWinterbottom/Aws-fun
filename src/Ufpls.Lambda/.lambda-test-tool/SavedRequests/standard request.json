@@ -1,0 +1,7 @@
+{
+  "Records": [
+    {
+      "body": "{\"CaseId\":\"abc123\",\"MemberId\":\"mem001\",\"FundValue\":2000,\"IsDeceased\":false,\"DateOfCrystallisation\":\"2020-01-01T00:00:00Z\"}"
+    }
+  ]
+}

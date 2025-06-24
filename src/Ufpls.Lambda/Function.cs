@@ -4,6 +4,7 @@ using Ufpls.Checker;
 using Ufpls.Domain;
 using MongoDB.Driver;
 using System.Text.Json;
+using MongoDB.Bson;
 
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -25,7 +26,7 @@ public class Function
     {
         // Fetch MongoDB connection string from env var (Secrets Manager later)
         var mongoConn = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
-        var client = new MongoClient(mongoConn);
+        var client = new MongoClient(mongoConn ?? "mongodb://localhost:27017");
         var db = client.GetDatabase("ufpls");
         _collection = db.GetCollection<UfplsCase>("cases");
 
@@ -62,21 +63,12 @@ public class Function
 
         ufplsCase.Status = isEligible ? UfplsCaseStatus.Eligible : UfplsCaseStatus.Ineligible;
         ufplsCase.EligibilityChecks = results;
+        ufplsCase.Id = ObjectId.GenerateNewId();
 
         // Check if document exists first
-        var existingDoc = await _collection.Find(x => x.CaseId == ufplsCase.CaseId).FirstOrDefaultAsync();
-        
-        if (existingDoc != null)
-        {
-            // Update existing - keep the existing Id
-            ufplsCase.Id = existingDoc.Id;
-            await _collection.ReplaceOneAsync(x => x.CaseId == ufplsCase.CaseId, ufplsCase);
-        }
-        else
-        {
-            // New document - don't set Id, let MongoDB generate it
-            ufplsCase.Id = null; // or just leave it as is
-            await _collection.InsertOneAsync(ufplsCase);
-        }
+        await _collection.ReplaceOneAsync(
+            x => x.CaseId == ufplsCase.CaseId,
+            ufplsCase,
+            new ReplaceOptions { IsUpsert = true });
     }
 }

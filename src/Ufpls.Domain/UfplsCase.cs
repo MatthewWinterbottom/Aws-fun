@@ -7,9 +7,8 @@ namespace Ufpls.Domain;
 public class UfplsCase
 {
     [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
     [JsonIgnore]
-    public string? Id { get; set; }
+    public ObjectId Id { get; set; } = ObjectId.Empty;
     public string CaseId { get; set; } = default!;
     public string MemberId { get; set; } = default!;
     public decimal FundValue { get; set; }
